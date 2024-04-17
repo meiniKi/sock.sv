@@ -213,7 +213,7 @@ const char* sock_readln(void* handle) {
     int ret = 0;
     char* end = (char*) memchr((char*)(h->rbuf), '\n', h->roff);
     while(ret != -1 && h->roff != BUFFER_SIZE && end == NULL) {
-        ret = recv(h->sock, h->rbuf + h->roff, BUFFER_SIZE - h->roff, 0);
+        ret = recv(h->sock, h->rbuf + h->roff, BUFFER_SIZE - h->roff, MSG_DONTWAIT);
         if( ret != -1 )
             end = (char*) memchr((char*)(h->rbuf + h->roff), '\n', ret); // Search for \n
         h->roff += ret;
